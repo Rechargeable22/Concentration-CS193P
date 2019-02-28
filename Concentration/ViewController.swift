@@ -11,14 +11,15 @@ import UIKit
 class ViewController: UIViewController {
     
     lazy var game = Concentration(numbersOfPairsOfCards: (cardButtons.count + 1) / 2)
+    var emojiChoices = ["👻", "🎃", "😱", "💀", "☠️", "🦇", "🕷", "🕸", "😈", "👺"]
+    var emoji = [Int: String]()
+
     
     var flipCount = 0 {
         didSet {
             flipCountLabel.text = "Flips: \(flipCount)"
         }
     }
-    let pumpkin = "🎃"
-    let ghost = "👻"
     
     @IBOutlet weak var flipCountLabel: UILabel!
     @IBOutlet var  cardButtons: Array<UIButton>!
@@ -31,6 +32,12 @@ class ViewController: UIViewController {
         }else{
             print("Choosen button not in cardButtons!")
         }
+    }
+    
+    @IBAction func touchRestart(_ sender: UIButton) {
+        game = Concentration(numbersOfPairsOfCards: (cardButtons.count + 1) / 2)
+        updateViewFromModel()
+        flipCount = 0
     }
     
     func updateViewFromModel(){
@@ -47,17 +54,8 @@ class ViewController: UIViewController {
         }
     }
     
-    var emojiChoices = ["👻", "🎃", "😱", "💀", "☠️", "🦇", "🕷", "🕸"]
     
-    var emoji = [Int: String]()
-
     func emoji( for card: Card) -> String{
-//        if emoji[card.identifier] != nil {
-//            return emoji[card.identifier]!
-//        }else{
-//            return "?"
-//        } // Is the same as what we see below
-        
         if emoji[card.identifier] == nil, emojiChoices.count > 0 {
             let randomIndex = Int(arc4random_uniform(UInt32(emojiChoices.count)))
             emoji[card.identifier] = emojiChoices.remove(at: randomIndex)
