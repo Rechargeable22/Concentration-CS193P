@@ -8,6 +8,7 @@
 
 import Foundation
 
+///Model of the Concentration game, managing the logic, cards and scores
 class Concentration {
     
     var cards = [Card]()
@@ -25,6 +26,7 @@ class Concentration {
         cards.shuffle()
     }
     
+    ///Logic that happens when a card got chosen by the player
     func chooseCard(at index: Int) {
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
